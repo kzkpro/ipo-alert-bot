@@ -92,8 +92,8 @@ export async function fetchAndSaveIpos() {
 
     console.log('✅ IPO data saved to DB:', new Date().toISOString())
     return ipos
-  } catch (err: any) {
-    console.error('❌ Error fetching IPO data:', err.message)
+  } catch (err) {
+    console.error('❌ Error fetching IPO data:', (err as Error).message)
     return null
   }
 }
