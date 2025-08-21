@@ -3,7 +3,7 @@ import cron from 'node-cron'
 import { fetchAndSaveIpos } from '../lib/fetchIpos'
 import { sendPushNotification } from '../lib/notifications'
 
-export function startIpoCron() {
+export async function startIpoCron() {
   cron.schedule('*/5 * * * * *', async () => {
     // every 5s for testing
     console.log('⏰ Checking IPO updates...')
