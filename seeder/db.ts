@@ -1,7 +1,8 @@
 // src/lib/db.ts
-import { neon } from '@netlify/neon'
 
-export const sql = neon() // automatically uses NETLIFY_DATABASE_URL
+import { neon } from '@neondatabase/serverless'
+
+export const sql = neon('NETLIFY_DATABASE_URL') // explicitly uses NETLIFY_DATABASE_URL
 async function createIpoTable() {
   await sql`
     CREATE TABLE IF NOT EXISTS ipos (
