@@ -1,6 +1,7 @@
 // pages/index.tsx
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Container, Table } from 'react-bootstrap'
 
 interface Ipo {
   // define IPO fields according to API response
@@ -21,15 +22,16 @@ export default function Home() {
   }, [])
 
   return (
-    <div>
+    <Container className='p-3'>
       <h1>IPO Alerts</h1>
-      <ul>
+      <Table>
         {ipos.map((ipo, idx) => (
-          <li key={idx}>
-            {ipo.IPOName} - {ipo.IssueDate}
-          </li>
+          <tr key={idx}>
+            <td>{ipo.IPOName}</td>
+            <td>{ipo.IssueDate}</td>
+          </tr>
         ))}
-      </ul>
-    </div>
+      </Table>
+    </Container>
   )
 }

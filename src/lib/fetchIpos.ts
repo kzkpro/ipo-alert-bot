@@ -7,21 +7,46 @@ const API_URL = process.env.NEXT_PUBLIC_IPO_API!
 export async function fetchAndSaveIpos() {
   try {
     const { data } = await axios.get(API_URL)
-    const ipos = data.items || []
+    const { result } = data
+    const ipos = result.data || []
 
     for (const ipo of ipos) {
       await query(
         `
         INSERT INTO ipos (
-          ipo_id, company_name, stock_symbol, share_registrar, sector_name, file_name,
-          share_type, price_per_unit, rating, units, min_units, max_units,
-          local_units, general_units, promoter_units, mutual_fund_units, other_units,
-          total_amount, opening_date_ad, opening_date_bs, closing_date_ad, closing_date_bs,
-          closing_time, extended_date_ad, extended_date_bs, extended_time, status,
-          fiscal_year_ad, fiscal_year_bs, culture_code
+          ipo_id, 
+          company_name, 
+          stock_symbol, 
+          share_registrar, 
+          sector_name, 
+          file_name,
+          share_type, 
+          price_per_unit, 
+          rating, 
+          units, 
+          min_units, 
+          max_units,
+          local_units, 
+          general_units, 
+          promoter_units, 
+          mutual_fund_units, 
+          other_units,
+          total_amount, 
+          opening_date_ad, 
+          opening_date_bs, 
+          closing_date_ad, 
+          closing_date_bs,
+          closing_time, 
+          extended_date_ad, 
+          extended_date_bs, 
+          extended_time, 
+          status,
+          fiscal_year_ad, 
+          fiscal_year_bs, 
+          culture_code
         )
         VALUES (
-          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29
+          $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30
         )
         ON CONFLICT (ipo_id) DO UPDATE SET
           company_name = EXCLUDED.company_name,
@@ -56,36 +81,36 @@ export async function fetchAndSaveIpos() {
           fetched_at = NOW()
         `,
         [
-          ipo.ipoId,
-          ipo.companyName,
-          ipo.stockSymbol,
-          ipo.shareRegistrar,
-          ipo.sectorName,
-          ipo.fileName,
-          ipo.shareType,
-          ipo.pricePerUnit,
-          ipo.rating,
-          ipo.units,
-          ipo.minUnits,
-          ipo.maxUnits,
-          ipo.localUnits,
-          ipo.generalUnits,
-          ipo.promoterUnits,
-          ipo.mutualFundUnits,
-          ipo.otherUnits,
-          ipo.totalAmount,
-          ipo.openingDateAD,
-          ipo.openingDateBS,
-          ipo.closingDateAD,
-          ipo.closingDateBS,
-          ipo.closingDateClosingTime,
-          ipo.extendedDateAD || null,
-          ipo.extendedDateBS || null,
-          ipo.extendedDateClosingTime || null,
-          ipo.status,
-          ipo.fiscalYearAD,
-          ipo.fiscalYearBS,
-          ipo.cultureCode,
+          Number(ipo.ipoId),
+          ipo.companyName ?? '',
+          ipo.stockSymbol ?? '',
+          ipo.shareRegistrar ?? null,
+          ipo.sectorName ?? null,
+          ipo.fileName ?? null,
+          ipo.shareType ?? null,
+          ipo.pricePerUnit ?? null,
+          ipo.rating ?? null,
+          Number(ipo.units) || 0,
+          Number(ipo.minUnits) || 0,
+          Number(ipo.maxUnits) || 0,
+          Number(ipo.localUnits) || 0,
+          Number(ipo.generalUnits) || 0,
+          Number(ipo.promoterUnits) || 0,
+          Number(ipo.mutualFundUnits) || 0,
+          Number(ipo.otherUnits) || 0,
+          Number(ipo.totalAmount) || 0,
+          ipo.openingDateAD ? new Date(ipo.openingDateAD) : null,
+          ipo.openingDateBS ?? null,
+          ipo.closingDateAD ? new Date(ipo.closingDateAD) : null,
+          ipo.closingDateBS ?? null,
+          ipo.closingTime ?? null,
+          ipo.extendedDateAD ? new Date(ipo.extendedDateAD) : null,
+          ipo.extendedDateBS ?? null,
+          ipo.extendedTime ?? null,
+          ipo.status ?? null,
+          ipo.fiscalYearAD ?? null,
+          ipo.fiscalYearBS ?? null,
+          ipo.cultureCode ?? null,
         ]
       )
     }
