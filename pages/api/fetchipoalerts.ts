@@ -3,6 +3,7 @@ import { fetchAndSaveIpos } from '@/lib/fetchIpos'
 import { sendPushNotification } from '@/lib/notifications'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
+// route for cron job triggered by  cron-job.org
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

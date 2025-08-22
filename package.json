@@ -9,9 +9,7 @@
     "lint": "eslint",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "netlify dev:exec drizzle-kit migrate",
-    "db:studio": "netlify dev:exec drizzle-kit studio",
-    "build-scripts": "tsc scripts/fetchData.ts --outDir dist/scripts",
-    "fetch-data": "npm run build-scripts && node dist/scripts/fetchData.js"
+    "db:studio": "netlify dev:exec drizzle-kit studio"
   },
   "dependencies": {
     "@capacitor/cli": "^7.4.2",
@@ -27,7 +25,6 @@
     "drizzle-orm": "^0.44.4",
     "fs-extra": "^11.3.1",
     "next": "15.5.0",
-    "node-cron": "^4.2.1",
     "pg": "^8.16.3",
     "react": "19.1.0",
     "react-bootstrap": "^2.10.10",
