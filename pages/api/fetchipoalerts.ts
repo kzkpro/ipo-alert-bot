@@ -1,5 +1,5 @@
 // pages/api/ipos.ts
-import { fetchAndSaveIpos } from '@/lib/fetchIpos'
+import { fetchAndSave } from '@/lib/fetchIpos'
 import { sendPushNotification } from '@/lib/notifications'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   try {
     console.log('⏰ Checking IPO updates...')
-    const data = await fetchAndSaveIpos()
+    const data = await fetchAndSave()
     if (data) await sendPushNotification('New IPO data available!')
     res.status(200).json(data)
   } catch (err) {
